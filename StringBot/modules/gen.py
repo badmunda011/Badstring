@@ -229,24 +229,24 @@ try:
         "☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ."
     )
     if telethon:
-        string_session = client.session.save()
-        await Bad.send_message(
-            user_id,
-            txt.format(ty, string_session, SUPPORT_CHAT),
-            disable_web_page_preview=True,
-        )
-        await client(JoinChannelRequest("HEROKUBIN_01"))
-    else:
-        string_session = await client.export_session_string()
-        await Bad.send_message(
-            user_id,
-            txt.format(ty, string_session, SUPPORT_CHAT),
-            disable_web_page_preview=True,
-        )
-        await client.join_chat("PBX_CHAT")
-except KeyError:
-    pass
-
+            string_session = client.session.save()
+            await client.send_message(
+                "me",
+                txt.format(ty, string_session, SUPPORT_CHAT),
+                link_preview=False,
+                parse_mode="html",
+            )
+            await client(JoinChannelRequest("@HEROKUBIN_01"))
+        else:
+            string_session = await client.export_session_string()
+            await client.send_message(
+                "me",
+                txt.format(ty, string_session, SUPPORT_CHAT),
+                disable_web_page_preview=True,
+            )
+            await client.join_chat("FallenAssociation")
+    except KeyError:
+        pass
 async def cancelled(message):
     if "/cancel" in message.text:
         await message.reply_text(
