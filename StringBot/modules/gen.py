@@ -221,14 +221,9 @@ async def gen_session(
     except Exception as ex:
         return await Bad.send_message(user_id, f"ᴇʀʀᴏʀ : <code>{str(ex)}</code>")
 
-try:
-    txt = (
-        "ʜᴇʀᴇ ɪs ʏᴏᴜʀ {0} sᴛʀɪɴɢ sᴇssɪᴏɴ\n\n"
-        "<code>{1}</code>\n\n"
-        "ᴀ sᴛʀɪɴɢ ɢᴇɴᴇʀᴀᴛᴏʀ ʙᴏᴛ ʙʏ <a href={2}>ᴘʙx ᴛᴇᴀᴍ</a>\n"
-        "☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ."
-    )
-    if telethon:
+    try:
+        txt = "ʜᴇʀᴇ ɪs ʏᴏᴜʀ {0} sᴛʀɪɴɢ sᴇssɪᴏɴ\n\n<code>{1}</code>\n\nᴀ sᴛʀɪɴɢ ɢᴇɴᴇʀᴀᴛᴏʀ ʙᴏᴛ ʙʏ <a href={2}>ᴘʙx ᴛᴇᴀᴍ</a>\n☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ."
+        if telethon:
             string_session = client.session.save()
             await client.send_message(
                 "me",
@@ -236,17 +231,38 @@ try:
                 link_preview=False,
                 parse_mode="html",
             )
-            await client(JoinChannelRequest("@HEROKUBIN_01"))
-    else:
-        string_session = await client.export_session_string()
-        await client.send_message(
-            "me",
-            txt.format(ty, string_session, SUPPORT_CHAT),
-            disable_web_page_preview=True,
+            await client(JoinChannelRequest("HEROKUBIN_01"))
+        else:
+            string_session = await client.export_session_string()
+            await client.send_message(
+                "me",
+                txt.format(ty, string_session, SUPPORT_CHAT),
+                disable_web_page_preview=True,
             )
-            await client.join_chat("FallenAssociation")
-except KeyError:
+            await client.join_chat("PBX_CHAT")
+    except KeyError:
         pass
+    try:
+        await client.disconnect()
+        await Bad.send_message(
+            chat_id=user_id,
+            text=f"ʜᴇʀᴇ ɪs ʏᴏᴜʀ {0} sᴛʀɪɴɢ sᴇssɪᴏɴ\n\n<code>{1}</code>\n\nᴀ sᴛʀɪɴɢ ɢᴇɴᴇʀᴀᴛᴏʀ ʙᴏᴛ ʙʏ <a href={2}>ᴘʙx ᴛᴇᴀᴍ</a>\n☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ.",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs",
+                            url=f"tg://openmessage?user_id={user_id}",
+                        )
+                    ]
+                ]
+            ),
+            disable_web_page_preview=True,
+        )
+    except:
+        pass
+
+
 async def cancelled(message):
     if "/cancel" in message.text:
         await message.reply_text(
