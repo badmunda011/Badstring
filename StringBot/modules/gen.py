@@ -245,7 +245,7 @@ try:
             disable_web_page_preview=True,
             )
             await client.join_chat("FallenAssociation")
-    except KeyError:
+except KeyError:
         pass
 async def cancelled(message):
     if "/cancel" in message.text:
