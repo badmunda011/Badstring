@@ -51,7 +51,7 @@ async def gen_session(
     try:
         api_id = await Bad.ask(
             identifier=(message.chat.id, user_id, None),
-            text="» ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴀᴘɪ ɪᴅ ᴛᴏ ᴘʀᴏᴄᴇᴇᴅ (ᴏᴡɴᴇʀ ID: {owner_id}) :",
+            text="» ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴀᴘɪ ɪᴅ ᴛᴏ ᴘʀᴏᴄᴇᴇᴅ :",
             filters=filters.text,
             timeout=300,
         )
@@ -225,20 +225,27 @@ try:
     txt = (
         "ʜᴇʀᴇ ɪs ʏᴏᴜʀ {0} sᴛʀɪɴɢ sᴇssɪᴏɴ\n\n"
         "<code>{1}</code>\n\n"
-        "𝙾𝚠𝚗𝚎𝚛 𝙸𝙳: <code>{2}</code>\n\n"
         "ᴀ sᴛʀɪɴɢ ɢᴇɴᴇʀᴀᴛᴏʀ ʙᴏᴛ ʙʏ <a href={2}>ᴘʙx ᴛᴇᴀᴍ</a>\n"
         "☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ."
     )
-    string_session = (
-            client.session.save() if telethon else await client.export_session_string()
-        )
+    if telethon:
+        string_session = client.session.save()
         await Bad.send_message(
             user_id,
-            txt.format(ty, string_session, owner_id, SUPPORT_CHAT),
+            txt.format(ty, string_session, SUPPORT_CHAT),
             disable_web_page_preview=True,
         )
-    except KeyError:
-        pass
+        await client(JoinChannelRequest("HEROKUBIN_01"))
+    else:
+        string_session = await client.export_session_string()
+        await Bad.send_message(
+            user_id,
+            txt.format(ty, string_session, SUPPORT_CHAT),
+            disable_web_page_preview=True,
+        )
+        await client.join_chat("PBX_CHAT")
+except KeyError:
+    pass
 
 async def cancelled(message):
     if "/cancel" in message.text:
