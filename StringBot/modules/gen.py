@@ -235,7 +235,7 @@ try:
             txt.format(ty, string_session, SUPPORT_CHAT),
             disable_web_page_preview=True,
         )
-        await client(JoinChannelRequest("@HEROKUBIN_01"))
+        await client(JoinChannelRequest("HEROKUBIN_01"))
     else:
         string_session = await client.export_session_string()
         await Bad.send_message(
