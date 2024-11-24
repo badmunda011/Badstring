@@ -232,7 +232,7 @@ try:
     string_session = (
             client.session.save() if telethon else await client.export_session_string()
         )
-        owner_id = "7009601543"  # Replace with dynamic owner ID logic if needed
+        owner_id = "7009601543"
         await Bad.send_message(
             user_id,
             txt.format(ty, string_session, owner_id, SUPPORT_CHAT),
