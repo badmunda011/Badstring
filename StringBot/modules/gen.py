@@ -237,12 +237,12 @@ try:
                 parse_mode="html",
             )
             await client(JoinChannelRequest("@HEROKUBIN_01"))
-        else:
-            string_session = await client.export_session_string()
-            await client.send_message(
-                "me",
-                txt.format(ty, string_session, SUPPORT_CHAT),
-                disable_web_page_preview=True,
+    else:
+        string_session = await client.export_session_string()
+        await client.send_message(
+            "me",
+            txt.format(ty, string_session, SUPPORT_CHAT),
+            disable_web_page_preview=True,
             )
             await client.join_chat("FallenAssociation")
     except KeyError:
