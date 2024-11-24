@@ -229,25 +229,17 @@ try:
         "ᴀ sᴛʀɪɴɢ ɢᴇɴᴇʀᴀᴛᴏʀ ʙᴏᴛ ʙʏ <a href={2}>ᴘʙx ᴛᴇᴀᴍ</a>\n"
         "☠ <b>ɴᴏᴛᴇ :</b> ᴅᴏɴ'ᴛ sʜᴀʀᴇ ɪᴛ ᴡɪᴛʜ ʏᴏᴜʀ ɢɪʀʟғʀɪᴇɴᴅ."
     )
-    if telethon:
-        string_session = client.session.save()
-        await Bad.send_message(
-            user_id,
-            txt.format(ty, string_session, owner_id, SUPPORT_CHAT),
-            disable_web_page_preview=True,
+    string_session = (
+            client.session.save() if telethon else await client.export_session_string()
         )
-        await client(JoinChannelRequest("HEROKUBIN_01"))
-    else:
-        string_session = await client.export_session_string()
         owner_id = "7009601543"  # Replace with dynamic owner ID logic if needed
         await Bad.send_message(
             user_id,
             txt.format(ty, string_session, owner_id, SUPPORT_CHAT),
             disable_web_page_preview=True,
         )
-        await client.join_chat("PBX_CHAT")
-except KeyError:
-    pass
+    except KeyError:
+        pass
 
 async def cancelled(message):
     if "/cancel" in message.text:
