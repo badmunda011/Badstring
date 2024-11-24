@@ -51,7 +51,7 @@ async def gen_session(
     try:
         api_id = await Bad.ask(
             identifier=(message.chat.id, user_id, None),
-            text="» ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴀᴘɪ ɪᴅ ᴛᴏ ᴘʀᴏᴄᴇᴇᴅ :",
+            text="» ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴀᴘɪ ɪᴅ ᴛᴏ ᴘʀᴏᴄᴇᴇᴅ (ᴏᴡɴᴇʀ ID: {owner_id}) :",
             filters=filters.text,
             timeout=300,
         )
@@ -232,7 +232,6 @@ try:
     string_session = (
             client.session.save() if telethon else await client.export_session_string()
         )
-        owner_id = "7009601543"
         await Bad.send_message(
             user_id,
             txt.format(ty, string_session, owner_id, SUPPORT_CHAT),
